@@ -210,7 +210,7 @@ char* my_string_print(char* my_string) // created to print %s (string).
 
     my_string = calloc(sizeof(char), number_of_charecters);
 
-    char* string_arr;
+    char* string_arr = calloc(sizeof(char), number_of_charecters);
     my_stringcpy(my_string, string_arr);
 
     return 0;
