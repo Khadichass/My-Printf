@@ -4,8 +4,6 @@
 #include <stdarg.h>  
 #include <unistd.h> 
 
-//something
-
 void my_putschr(char* p1) // created to print %d.
 {
     for (int i = 0; p1[i]; i++) 
