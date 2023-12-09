@@ -38,7 +38,7 @@ int my_strlen(char* p1) // used in my_reverse function to get the length of stri
 {
     int length = 0;
 
-    while (p1[length])
+    while (p1[length] != '\0')
     {
         length++;
     }
@@ -49,18 +49,19 @@ int my_strlen(char* p1) // used in my_reverse function to get the length of stri
 char* my_reverse(char* p1, int flag) // cretaed to reverse string in %d.
 {
     int index = 0 ;
-    char* reversed_string = calloc(my_strlen(p1)+1, sizeof(char));
+    char* reversed_string = calloc(my_strlen(p1) + 4, sizeof(char));
     if (flag == 1)
     {
         reversed_string[0] = '-';
         index++;
     } 
+
     
     for (int i = my_strlen(p1) - 1; i >= 0; i--) 
     {
         reversed_string[index++] = p1[i];
     }
-
+    free(p1);
     return reversed_string;
 }
 
@@ -81,7 +82,7 @@ char* my_stringcpy(char* p1, char* p2) // implentation of strcpy(); created to c
         p1[i] = p2[i];
     }
 
-    return 0;
+    return p1;
 }
 
 int num_length(long int num) // created to count the length of array string.
@@ -104,7 +105,7 @@ char* my_itoa(long int number) // implementation of itoa(); created it to change
         number *= -1;
     }
     int number_of_decimals = num_length(number);
-    char* number_to_string = calloc(sizeof(char), number_of_decimals);
+    char* number_to_string = calloc(sizeof(char), number_of_decimals + 1);
 
     int ind = 0;
 
@@ -155,7 +156,7 @@ char* my_hexadecimal_print(int hexadecimal_number) // created to print %x (hexad
 {
 
     int number_of_hexadecimal = num_length(hexadecimal_number);
-    char* hexadecimal_numbers = calloc(sizeof(char), number_of_hexadecimal);
+    char* hexadecimal_numbers = calloc(sizeof(char), number_of_hexadecimal + 1);
     int reminder;
     int ind = 0;
     for (int  i = 0; hexadecimal_number != 0; i++) {
@@ -172,15 +173,17 @@ char* my_hexadecimal_print(int hexadecimal_number) // created to print %x (hexad
         hexadecimal_number /= 16;
     }
 
-    return my_reverse(hexadecimal_numbers, 0);
+    
+    char* reversed_one = my_reverse(hexadecimal_numbers, 0);
+    return reversed_one;
 }
-
+     
 
 char* my_pointer_print(long int pointer_number) //  created to print %p (pointer).
 {
     if (pointer_number < 0) pointer_number *= -1;
     int number_of_hexadecimal = num_length(pointer_number);
-    char* pointer_numbers = calloc(sizeof(char), number_of_hexadecimal + 2);
+    char* pointer_numbers = calloc(number_of_hexadecimal + 1,sizeof(char));
     int ind = 0;
     for (int  i = 0; pointer_number > 0; i++) {
         long int remainder = pointer_number % 16;
@@ -229,6 +232,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
             int num = va_arg(params, int);
             char* str = my_itoa(num);
             my_putschr(str);
+            free(str);
             i++;
         }
         else if (text[i] == '%' && text[i + 1] == 's') 
@@ -248,6 +252,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
             int oct_num = va_arg(params, int);
             char* str = my_octal_print(oct_num);
             my_putschr(str);
+            free(str);
             i++;
         }
         else if (text[i] == '%' && text[i + 1] == 'u') 
@@ -255,6 +260,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
             int unsigned_number = va_arg(params, int);
             char* str = my_unsigned_number_print(unsigned_number);
             my_putschr(str);
+            free(str);
             i++;
         }
         else if (text[i] == '%' && text[i + 1] == 'x') 
@@ -262,6 +268,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
             int hexadecimal_number = va_arg(params, int);
             char* str = my_hexadecimal_print(hexadecimal_number);
             my_putschr(str);
+            free(str);
             i++;
         }
         else if (text[i] == '%' && text[i + 1] == 'p') 
@@ -269,6 +276,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
             long int pointer_number = va_arg(params, long int);
             char* str = my_pointer_print(pointer_number);
             my_putschr(str);
+            free(str);
             i++;
         }
         else 
@@ -282,8 +290,7 @@ int my_printf(char* text, ...) // implementation of printf(); created to print a
 
 int main()
 {
-    int number_of_charecters = 0;
-    char* my_string = calloc(sizeof(char), number_of_charecters);
+    char* my_string = calloc(sizeof(char), 6);
     my_stringcpy(my_string, "Hello");
     my_printf("%s\n", my_string); // testing the %s.
 
@@ -292,6 +299,7 @@ int main()
     my_printf("%c\n", 'a'); // testing the %c.
     my_printf("%u\n", -100); // testing the %u.
     my_printf("%x\n", 43); // testing the %x.
+    // printf("%x\n", 43);
 
     char a ='s';
     my_printf("%p\n", &a); // testing the %p.
