@@ -206,7 +206,7 @@ char* my_pointer_print(long int pointer_number) //  created to print %p (pointer
 
 
 
-char* my_string_print(char* my_string) // created to print %s (string).
+char* my_string_print(char* my_string) // created c
 {
     int number_of_charecters = my_strlen(my_string);
 
