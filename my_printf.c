@@ -303,6 +303,8 @@ int main()
 
     char a ='s';
     my_printf("%p\n", &a); // testing the %p.
+    my_printf("%p\n", &a); // testing the %p.
+    my_printf("%p\n", &a); // testing the %p.
 
     free(my_string);
     return 0;
