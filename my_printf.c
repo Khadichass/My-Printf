@@ -12,6 +12,8 @@ void my_putschr(char* p1) // created to print %d.
     }
 }
 
+// hi
+
 char* my_string_putschr(char* p1) // created to print %s (string).
 {
     if (p1 != NULL) 
